@@ -32,10 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.restaurant_menu,
-              color: AppTheme.backgroundColor,
-              size: 80,
+            Image.asset(
+              'assets/images/swiftdine.jpg',
+              width: 100,
+              height: 100,
             ),
             SizedBox(height: 20),
             Text(

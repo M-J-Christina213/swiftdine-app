@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swiftdine_app/screens/login_screen.dart';
 import 'package:swiftdine_app/themes/app_theme.dart';
-import 'package:swiftdine_app/screens/home_screen.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget {

@@ -1,6 +1,5 @@
-// views/widgets/bottom_nav_bar.dart
-
 import 'package:flutter/material.dart';
+import '../../themes/app_theme.dart';
 import '../home_screen.dart';
 import '../menus_screen.dart';
 import '../offers_screen.dart';
@@ -27,12 +26,13 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: AppTheme.primaryColor,
+        unselectedItemColor: AppTheme.descriptionColor, 
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {

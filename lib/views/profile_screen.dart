@@ -9,14 +9,6 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              // Navigate to Cart
-            },
-          ),
-        ],
       ),
       body: const Center(child: Text('Profile Screen')),
     );

@@ -20,6 +20,7 @@ class SwiftDineApp extends StatelessWidget {
         themeMode: ThemeMode.system, 
         initialRoute: '/splash',
         routes: {
+          '/': (context) => const SplashScreen(),
           '/splash': (context) => const SplashScreen(),
           '/login': (context) => const LoginScreen(),
           '/home': (context) => const BottomNavBarScreen(),

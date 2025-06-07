@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // Simulate loading, then navigate to HomeScreen after 3 seconds
     Timer(Duration(seconds: 4), () {
-      Navigator.of(context).pushReplacementNamed('/login');
+      Navigator.of(context).pushReplacementNamed('/home');
 
     });
   }

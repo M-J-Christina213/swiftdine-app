@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../controllers/auth_controller.dart';
-import 'shared/auth_ui.dart'; // assume your buildAuthUI is here
+import 'shared/auth_ui.dart'; 
 import '../views/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {

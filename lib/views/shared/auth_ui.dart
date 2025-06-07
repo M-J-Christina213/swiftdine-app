@@ -44,7 +44,7 @@ Widget buildAuthUI(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Flavor Passport',
+                    'Swift Dine',
                     style: GoogleFonts.pacifico(
                       fontSize: 32,
                       color: Colors.deepOrangeAccent,

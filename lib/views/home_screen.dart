@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:swiftdine_app/themes/app_theme.dart';
-import 'package:swiftdine_app/views/widgets/category_list.dart';
-import 'package:swiftdine_app/views/widgets/restaurant_card.dart';
-import 'package:swiftdine_app/views/widgets/search_bar.dart';
-import 'package:swiftdine_app/views/widgets/section_title.dart';
-import 'package:swiftdine_app/views/widgets/nearby_map.dart';
+import 'package:swiftdine_app/views/widgets/home/category_list.dart';
+import 'package:swiftdine_app/views/widgets/home/restaurant_card.dart';
+import 'package:swiftdine_app/views/widgets/home/search_bar.dart';
+import 'package:swiftdine_app/views/widgets/home/section_title.dart';
+import 'package:swiftdine_app/views/widgets/home/nearby_map.dart';
 import 'package:swiftdine_app/views/cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {

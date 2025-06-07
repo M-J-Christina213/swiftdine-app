@@ -7,6 +7,7 @@ import 'package:swiftdine_app/views/widgets/restaurant_card.dart';
 import 'package:swiftdine_app/views/widgets/search_bar.dart';
 import 'package:swiftdine_app/views/widgets/section_title.dart';
 import 'package:swiftdine_app/views/widgets/nearby_map.dart';
+import 'package:swiftdine_app/views/cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -90,7 +91,12 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.shopping_cart_outlined),
-            onPressed: () {},
+            onPressed: () {
+              
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const CartScreen()));
+
+
+            },
           ),
           const SizedBox(width: 10),
         ],

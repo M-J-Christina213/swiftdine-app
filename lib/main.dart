@@ -3,10 +3,18 @@ import 'package:swiftdine_app/views/splash_screen.dart';
 import 'themes/app_theme.dart';
 import 'views/login_screen.dart';
 import 'views/widgets/bottom_nav_bar.dart';
+import 'package:swiftdine_app/views/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const SwiftDineApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CartProvider(),
+      child: const SwiftDineApp(),
+    ),
+  );
 }
+
 
 class SwiftDineApp extends StatelessWidget {
   const SwiftDineApp({super.key});

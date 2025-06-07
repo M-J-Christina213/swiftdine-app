@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:swiftdine_app/themes/app_theme.dart';
 import 'package:swiftdine_app/views/widgets/category_list.dart';
 import 'package:swiftdine_app/views/widgets/restaurant_card.dart';
@@ -6,8 +8,76 @@ import 'package:swiftdine_app/views/widgets/search_bar.dart';
 import 'package:swiftdine_app/views/widgets/section_title.dart';
 import 'package:swiftdine_app/views/widgets/nearby_map.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String _location = 'Fetching your location...';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchLocation();
+  }
+
+  Future<void> _fetchLocation() async {
+    try {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        setState(() {
+          _location = 'Location services are disabled';
+        });
+        return;
+      }
+
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          setState(() {
+            _location = 'Location permission denied';
+          });
+          return;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        setState(() {
+          _location = 'Permission denied forever';
+        });
+        return;
+      }
+
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        final place = placemarks.first;
+        setState(() {
+          _location = '${place.name}, ${place.street}\n${place.locality}, ${place.country}';
+        });
+      } else {
+        setState(() {
+          _location = 'Location not found';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _location = 'Failed to get location';
+      });
+      
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +102,15 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                children: const [
-                  Icon(Icons.location_on_outlined, color: AppTheme.primaryColor),
-                  SizedBox(width: 8),
+                children: [
+                  const Icon(Icons.location_on_outlined, color: AppTheme.primaryColor),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      "Colombo City Center\n137 Sir James Peiris Mawatha",
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                      _location,
+                      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                     ),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
@@ -72,7 +142,8 @@ class HomeScreen extends StatelessWidget {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: 3,
-                  itemBuilder: (context, index) => RestaurantCard(index: index, compact: true),
+                  itemBuilder: (context, index) =>
+                      RestaurantCard(index: index, compact: true),
                 ),
               ),
             ],

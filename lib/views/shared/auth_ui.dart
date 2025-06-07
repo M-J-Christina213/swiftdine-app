@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -138,7 +140,7 @@ Widget buildAuthUI(
                     onTap: onFooterAction,
                     child: Text.rich(
                       TextSpan(
-                        text: footerText + ' ',
+                        text: '$footerText ',
                         children: [
                           TextSpan(
                             text: footerActionText,

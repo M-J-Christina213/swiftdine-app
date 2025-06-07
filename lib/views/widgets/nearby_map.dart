@@ -5,13 +5,14 @@ class NearbyMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 180,
-      decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(12),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Image.asset(
+        'images/map.png',
+        height: 300,
+        width: double.infinity,
+        fit: BoxFit.cover,
       ),
-      child: Center(child: Text("Map Placeholder")),
     );
   }
 }

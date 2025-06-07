@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 24),
               const SectionTitle(title: "Restaurants Near You"),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               const NearbyMap(),
               const SizedBox(height: 24),
               const SectionTitle(title: "Nearby Hidden Gems"),

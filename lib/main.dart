@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:swiftdine_app/views/splash_screen.dart';
 import 'themes/app_theme.dart';
 import 'views/login_screen.dart';
-import 'views/home_screen.dart';
+import 'views/widgets/bottom_nav_bar.dart';
 
 void main() {
   runApp(const SwiftDineApp());
@@ -22,9 +22,8 @@ class SwiftDineApp extends StatelessWidget {
         routes: {
           '/splash': (context) => const SplashScreen(),
           '/login': (context) => const LoginScreen(),
-          '/home': (context) => const HomeScreen(),
+          '/home': (context) => const BottomNavBarScreen(),
         },
-        home: SplashScreen(),
         debugShowCheckedModeBanner: false,
 
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swiftdine_app/views/login_screen.dart';
 import 'package:swiftdine_app/themes/app_theme.dart';
 import 'dart:async';
 
@@ -18,9 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // Simulate loading, then navigate to HomeScreen after 3 seconds
     Timer(Duration(seconds: 4), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => LoginScreen()),
-      );
+      Navigator.of(context).pushReplacementNamed('/login');
+
     });
   }
   

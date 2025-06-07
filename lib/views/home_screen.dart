@@ -65,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
       if (placemarks.isNotEmpty) {
         final place = placemarks.first;
         setState(() {
-          _location = '${place.name}, ${place.street}\n${place.locality}, ${place.country}';
+          _location =
+              '${place.locality}, ${place.country}';
         });
       } else {
         setState(() {
@@ -76,7 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _location = 'Failed to get location';
       });
-      
     }
   }
 
@@ -84,42 +84,46 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 0),
-          child: Image.asset('assets/images/swiftdine.jpg', height: 80),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            const Icon(Icons.location_on_outlined, color: AppTheme.primaryColor),
+            const SizedBox(width: 6),
+            Expanded(
+              child: Text(
+                _location,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined),
+            icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black87),
             onPressed: () {
-              
-              Navigator.push(context, MaterialPageRoute(builder: (_) => const CartScreen()));
-
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const CartScreen()),
+              );
             },
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
         ],
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  const Icon(Icons.location_on_outlined, color: AppTheme.primaryColor),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      _location,
-                      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               const SearchBarWidget(),
               const SizedBox(height: 24),
               const SectionTitle(title: "Explore Categories"),
@@ -132,8 +136,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 240,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) => RestaurantCard(index: index),
+                  itemCount: 3,
+                  itemBuilder: (context, index) =>
+                      RestaurantCard(index: index),
                 ),
               ),
               const SizedBox(height: 24),
@@ -144,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SectionTitle(title: "Nearby Hidden Gems"),
               const SizedBox(height: 8),
               SizedBox(
-                height: 120,
+                height: 160,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: 3,

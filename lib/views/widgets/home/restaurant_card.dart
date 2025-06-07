@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swiftdine_app/views/restaurant_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -83,10 +84,17 @@ class RestaurantCard extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    final restaurant = restaurants[index % restaurants.length];
+Widget build(BuildContext context) {
+  final restaurant = restaurants[index % restaurants.length];
 
-    return Container(
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const RestaurantDetailScreen()),
+    );
+  },
+    child: Container(
       width: compact ? 160 : 240,
       margin: const EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
@@ -123,7 +131,6 @@ class RestaurantCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          // Reviews and tags row
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
@@ -149,7 +156,6 @@ class RestaurantCard extends StatelessWidget {
               ],
             ),
           ),
-          // Working hours
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             child: Text(
@@ -162,6 +168,7 @@ class RestaurantCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

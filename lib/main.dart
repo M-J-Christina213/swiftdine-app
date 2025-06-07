@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:swiftdine_app/screens/splash_screen.dart';
+import 'package:swiftdine_app/views/splash_screen.dart';
 import 'themes/app_theme.dart';
-import 'screens/login_screen.dart';
-import 'screens/home_screen.dart';
+import 'views/login_screen.dart';
+import 'views/home_screen.dart';
 
 void main() {
   runApp(const SwiftDineApp());

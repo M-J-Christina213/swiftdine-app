@@ -43,7 +43,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/swiftdine.jpg
-    - assets/images/auth/login.png
+    - assets/images/auth/auth_background.png
     # - images/a_dot_ham.jpeg
     # An asset can be a file or a directory. If it is a directory, all files in
     # that directory will be included in the application.

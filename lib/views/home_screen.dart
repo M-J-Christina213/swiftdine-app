@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 240,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 3,
+                  itemCount: RestaurantCard.restaurants.length,
                   itemBuilder: (context, index) =>
                       RestaurantCard(index: index),
                 ),
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 160,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 3,
+                  itemCount: RestaurantCard.restaurants.length,
                   itemBuilder: (context, index) =>
                       RestaurantCard(index: index, compact: true),
                 ),

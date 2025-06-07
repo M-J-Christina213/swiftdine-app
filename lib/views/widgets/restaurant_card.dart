@@ -1,50 +1,86 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Restaurants')),
+        body: const Padding(
+          padding: EdgeInsets.only(top: 20),
+          child: RestaurantListSection(),
+        ),
+      ),
+    );
+  }
+}
+
+class RestaurantListSection extends StatelessWidget {
+  const RestaurantListSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: List.generate(
+          RestaurantCard.restaurants.length,
+          (index) => RestaurantCard(index: index),
+        ),
+      ),
+    );
+  }
+}
+
 class RestaurantCard extends StatelessWidget {
   final int index;
   final bool compact;
 
   const RestaurantCard({super.key, required this.index, this.compact = false});
 
-  // Sample data, ideally should come from your backend or state management
   static final List<Map<String, dynamic>> restaurants = [
     {
       'name': 'Mt. Lavinia',
-    'image': 'assets/images/mtlavinia.webp',
-    'reviews': 4.5,
-    'tags': ['Seafood', 'Sri Lankan'],
-    'hours': '9 AM - 10 PM',
-  },
-  {
-    'name': 'Kingsbury',
-    'image': 'assets/images/kingsbury.jpg',
-    'reviews': 4.2,
-    'tags': ['Spicy', 'Indian'],
-    'hours': '10 AM - 11 PM',
-  },
-  {
-    'name': 'ITC Randeepa',
-    'image': 'assets/images/itc.jfif',
-    'reviews': 4.7,
-    'tags': ['Chicken', 'Chinese'],
-    'hours': '8 AM - 9 PM',
-  },
-  {
-    'name': 'Cinnamon Grand',
-    'image': 'assets/images/cinamon.jpg',
-    'reviews': 4.8,
-    'tags': ['Sri Lankan', 'Spicy'],
-    'hours': '11 AM - 12 AM',
-  },
-  {
-    'name': 'Taj Samudra',
-    'image': 'assets/images/taj.avif',
-    'reviews': 4.6,
-    'tags': ['Seafood', 'Indian'],
-    'hours': '9 AM - 10 PM',
-  }
+      'image': 'assets/images/mtlavinia.webp',
+      'reviews': 4.5,
+      'tags': ['Seafood', 'Sri Lankan'],
+      'hours': '9 AM - 10 PM',
+    },
+    {
+      'name': 'Kingsbury',
+      'image': 'assets/images/kingsbury.jpg',
+      'reviews': 4.2,
+      'tags': ['Spicy', 'Indian'],
+      'hours': '10 AM - 11 PM',
+    },
+    {
+      'name': 'ITC Randeepa',
+      'image': 'assets/images/itc.jfif',
+      'reviews': 4.7,
+      'tags': ['Chicken', 'Chinese'],
+      'hours': '8 AM - 9 PM',
+    },
+    {
+      'name': 'Cinnamon Grand',
+      'image': 'assets/images/cinamon.jpg',
+      'reviews': 4.8,
+      'tags': ['Sri Lankan', 'Spicy'],
+      'hours': '11 AM - 12 AM',
+    },
+    {
+      'name': 'Taj Samudra',
+      'image': 'assets/images/taj.png',
+      'reviews': 4.6,
+      'tags': ['Seafood', 'Indian'],
+      'hours': '9 AM - 10 PM',
+    }
   ];
-    
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +111,6 @@ class RestaurantCard extends StatelessWidget {
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             child: Text(
@@ -88,7 +123,6 @@ class RestaurantCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-
           // Reviews and tags row
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -115,7 +149,6 @@ class RestaurantCard extends StatelessWidget {
               ],
             ),
           ),
-
           // Working hours
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),

@@ -202,6 +202,7 @@ class _MenuListState extends State<MenuList> {
                   description: item.description,
                   featuredRestaurant: item.featuredRestaurants.join(', '),
                   price: item.price,
+                  imagePath: item.imagePath,
                 ),
               );
               ScaffoldMessenger.of(context).showSnackBar(

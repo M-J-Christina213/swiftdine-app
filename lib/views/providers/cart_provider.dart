@@ -6,26 +6,37 @@ class CartProvider with ChangeNotifier {
 
   List<CartItem> get items => _items;
 
-  void addItem(CartItem newItem) {
-    final index = _items.indexWhere((item) =>
-        item.name == newItem.name &&
-        item.featuredRestaurant == newItem.featuredRestaurant);
+  double get totalPrice {
+    return _items.fold(0.0, (sum, item) => sum + (item.price * item.quantity));
+  }
 
-    if (index >= 0) {
-      _items[index].quantity += 1;
+  void addItem(CartItem newItem) {
+    final existingIndex = _items.indexWhere((item) => item.name == newItem.name);
+
+    if (existingIndex >= 0) {
+      _items[existingIndex].quantity++;
     } else {
       _items.add(newItem);
     }
     notifyListeners();
   }
 
-  void updateQuantity(int index, int newQty) {
-    _items[index].quantity = newQty;
+  void removeItem(CartItem item) {
+    _items.remove(item);
     notifyListeners();
   }
 
-  void removeItem(int index) {
-    _items.removeAt(index);
+  void incrementQuantity(CartItem item) {
+    item.quantity++;
+    notifyListeners();
+  }
+
+  void decrementQuantity(CartItem item) {
+    if (item.quantity > 1) {
+      item.quantity--;
+    } else {
+      removeItem(item);
+    }
     notifyListeners();
   }
 
@@ -33,7 +44,4 @@ class CartProvider with ChangeNotifier {
     _items.clear();
     notifyListeners();
   }
-
-  double get totalPrice => _items.fold(
-      0.0, (sum, item) => sum + (item.price * item.quantity));
 }

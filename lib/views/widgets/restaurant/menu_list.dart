@@ -155,7 +155,22 @@ class _MenuListState extends State<MenuList> {
                       SizedBox(
                         width: 120,
                         child: ElevatedButton.icon(
-                          onPressed: () => add(item.id),
+                          onPressed: () {
+                            add(item.id);
+                            Provider.of<CartProvider>(context, listen: false).addItem(
+                              CartItem(
+                                name: item.name,
+                                description: item.description,
+                                featuredRestaurant: item.featuredRestaurants.join(', '),
+                                price: item.price,
+                                imagePath: item.imagePath,
+                              ),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("${item.name} added to cart")),
+                            );
+                          },
+
                           icon: const Icon(Icons.shopping_cart, size: 18),
                           label: Text(
                             qty == 0 ? "Add to Cart" : "Add More",

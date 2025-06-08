@@ -12,7 +12,6 @@ class MenuList extends StatefulWidget {
   State<MenuList> createState() => _MenuListState();
 }
 
-
 class _MenuListState extends State<MenuList> {
   final List<MenuItem> allItems = [
     // Sri Lankan Special
@@ -36,25 +35,26 @@ class _MenuListState extends State<MenuList> {
     MenuItem(id: "12", name: "Spicy Egg Noodles", description: "Egg noodles tossed in hot sauce.", price: 850.0, imagePath: "assets/images/eggnoddle.png", category: "Spicy Dishes", featuredRestaurants: ["Spice Fusion"], rating: 4.2, likeCount: 23),
 
     // Indian
-    MenuItem(id: "13", name: "Butter Chicken", description: "Creamy and rich Indian chicken curry.", price: 1200.0, imagePath: "assets/images/butter_chicken.jpg", category: "Indian", featuredRestaurants: ["Tandoori Tales"], rating: 4.8, likeCount: 71),
-    MenuItem(id: "14", name: "Tandoori Chicken", description: "Indian spiced grilled chicken.", price: 1250.0, imagePath: "assets/images/tandoori.jpg", category: "Indian", featuredRestaurants: ["Tandoori Tales"], rating: 4.7, likeCount: 63),
-    MenuItem(id: "15", name: "Paneer Tikka", description: "Grilled Indian cottage cheese skewers.", price: 950.0, imagePath: "assets/images/paneer.jpg", category: "Indian", featuredRestaurants: ["Tandoori Tales"], rating: 4.3, likeCount: 26),
+    MenuItem(id: "13", name: "Butter Chicken", description: "Creamy and rich Indian chicken curry.", price: 1200.0, imagePath: "assets/images/butterchicken.png", category: "Indian", featuredRestaurants: ["Tandoori Tales"], rating: 4.8, likeCount: 71),
+    MenuItem(id: "14", name: "Tandoori Chicken", description: "Indian spiced grilled chicken.", price: 1250.0, imagePath: "assets/images/tandori.png", category: "Indian", featuredRestaurants: ["Tandoori Tales"], rating: 4.7, likeCount: 63),
+    MenuItem(id: "15", name: "Paneer Tikka", description: "Grilled Indian cottage cheese skewers.", price: 950.0, imagePath: "assets/images/paneer.png", category: "Indian", featuredRestaurants: ["Tandoori Tales"], rating: 4.3, likeCount: 26),
 
     // Chinese
-    MenuItem(id: "16", name: "Sweet and Sour Chicken", description: "Crispy chicken in sweet & tangy sauce.", price: 980.0, imagePath: "assets/images/sweet_sour.jpg", category: "Chinese", featuredRestaurants: ["Dragon Palace"], rating: 4.3, likeCount: 45),
-    MenuItem(id: "17", name: "Vegetable Fried Rice", description: "Classic Chinese-style fried rice.", price: 750.0, imagePath: "assets/images/fried_rice.jpg", category: "Chinese", featuredRestaurants: ["Dragon Palace"], rating: 4.0, likeCount: 27),
+    MenuItem(id: "16", name: "Sweet and Sour Chicken", description: "Crispy chicken in sweet & tangy sauce.", price: 980.0, imagePath: "assets/images/sweet.png", category: "Chinese", featuredRestaurants: ["Dragon Palace"], rating: 4.3, likeCount: 45),
+    MenuItem(id: "17", name: "Vegetable Fried Rice", description: "Classic Chinese-style fried rice.", price: 750.0, imagePath: "assets/images/friedrice.png", category: "Chinese", featuredRestaurants: ["Dragon Palace"], rating: 4.0, likeCount: 27),
 
     // Thai
-    MenuItem(id: "18", name: "Green Curry", description: "Spicy Thai green curry with vegetables.", price: 1100.0, imagePath: "assets/images/green_curry.jpg", category: "Thai", featuredRestaurants: ["Thai Treat"], rating: 4.6, likeCount: 33),
-    MenuItem(id: "19", name: "Pad Thai", description: "Famous Thai stir-fried noodle dish.", price: 950.0, imagePath: "assets/images/pad_thai.jpg", category: "Thai", featuredRestaurants: ["Thai Treat"], rating: 4.5, likeCount: 36),
-    MenuItem(id: "20", name: "Tom Yum Soup", description: "Hot & sour Thai seafood soup.", price: 950.0, imagePath: "assets/images/tom_yum.jpg", category: "Thai", featuredRestaurants: ["Thai Treat"], rating: 4.4, likeCount: 35),
+    MenuItem(id: "18", name: "Green Curry", description: "Spicy Thai green curry with vegetables.", price: 1100.0, imagePath: "assets/images/greencurry.png", category: "Thai", featuredRestaurants: ["Thai Treat"], rating: 4.6, likeCount: 33),
+    MenuItem(id: "19", name: "Pad Thai", description: "Famous Thai stir-fried noodle dish.", price: 950.0, imagePath: "assets/images/padthai.png", category: "Thai", featuredRestaurants: ["Thai Treat"], rating: 4.5, likeCount: 36),
+    MenuItem(id: "20", name: "Tom Yum Soup", description: "Hot & sour Thai seafood soup.", price: 950.0, imagePath: "assets/images/soup.png", category: "Thai", featuredRestaurants: ["Thai Treat"], rating: 4.4, likeCount: 35),
 
     // Desserts
-    MenuItem(id: "21", name: "Watalappam", description: "Sri Lankan dessert with jaggery and coconut.", price: 450.0, imagePath: "assets/images/watalappam.jpg", category: "Desserts", featuredRestaurants: ["Rice Point"], rating: 4.9, likeCount: 55),
-    MenuItem(id: "22", name: "Chocolate Lava Cake", description: "Molten-centered chocolate dessert.", price: 600.0, imagePath: "assets/images/lava_cake.jpg", category: "Desserts", featuredRestaurants: ["Rice Point"], rating: 4.9, likeCount: 47),
-    MenuItem(id: "23", name: "Mango Sticky Rice", description: "Sweet mango with coconut sticky rice.", price: 700.0, imagePath: "assets/images/mango_rice.jpg", category: "Desserts", featuredRestaurants: ["Thai Treat"], rating: 4.8, likeCount: 29),
-    MenuItem(id: "24", name: "Gulab Jamun", description: "Indian syrup-soaked dessert balls.", price: 500.0, imagePath: "assets/images/gulab_jamun.jpg", category: "Desserts", featuredRestaurants: ["Tandoori Tales"], rating: 4.7, likeCount: 40),
+    MenuItem(id: "21", name: "Watalappam", description: "Sri Lankan dessert with jaggery and coconut.", price: 450.0, imagePath: "assets/images/watalampan.png", category: "Desserts", featuredRestaurants: ["Rice Point"], rating: 4.9, likeCount: 55),
+    MenuItem(id: "22", name: "Chocolate Lava Cake", description: "Molten-centered chocolate dessert.", price: 600.0, imagePath: "assets/images/lavacake.png", category: "Desserts", featuredRestaurants: ["Rice Point"], rating: 4.9, likeCount: 47),
+    MenuItem(id: "23", name: "Mango Sticky Rice", description: "Sweet mango with coconut sticky rice.", price: 700.0, imagePath: "assets/images/mangorice.png", category: "Desserts", featuredRestaurants: ["Thai Treat"], rating: 4.8, likeCount: 29),
+    MenuItem(id: "24", name: "Gulab Jamun", description: "Indian syrup-soaked dessert balls.", price: 500.0, imagePath: "assets/images/cake.png", category: "Desserts", featuredRestaurants: ["Tandoori Tales"], rating: 4.7, likeCount: 40),
   ];
+
 
   Map<String, int> quantities = {};
 
@@ -96,7 +96,7 @@ class _MenuListState extends State<MenuList> {
         if (widget.category != null)
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Text("${widget.category!} Menu", style: theme.textTheme.titleLarge),
+            child: Text("${widget.category!} Menu", style: theme.textTheme.headlineSmall),
           ),
         ...filtered.map((item) => buildMenuItemCard(item, theme)),
       ],
@@ -104,54 +104,75 @@ class _MenuListState extends State<MenuList> {
   }
 
   Widget buildMenuItemCard(MenuItem item, ThemeData theme) {
+    final qty = quantities[item.id] ?? 0;
+
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(14),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(12),
               child: Image.asset(
                 item.imagePath,
-                width: 80,
-                height: 80,
+                width: 100,
+                height: 100,
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(item.name, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 4),
+                  Text(item.description, style: theme.textTheme.bodyMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 6),
+                  Text("Rating: ${item.rating} ★", style: TextStyle(color: Colors.orange.shade800)),
+                  Text("From: ${item.featuredRestaurants.join(", ")}", style: theme.textTheme.bodySmall?.copyWith(color: Colors.blueGrey)),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(item.name, style: theme.textTheme.titleMedium),
+                      /// Price + Quantity
                       Row(
                         children: [
-                          const Icon(Icons.favorite, size: 18, color: Colors.red),
-                          const SizedBox(width: 4),
-                          Text("${item.likeCount}", style: theme.textTheme.bodySmall),
+                          Text("Rs ${item.price.toStringAsFixed(2)}", style: theme.textTheme.titleMedium?.copyWith(color: Colors.deepOrangeAccent)),
+                          const SizedBox(width: 12), // ADD SPACE HERE
+                          buildQuantityControls(item, theme),
                         ],
                       ),
+
+                      /// Add to Cart Button
+                      SizedBox(
+                        width: 120,
+                        child: ElevatedButton.icon(
+                          onPressed: () => add(item.id),
+                          icon: const Icon(Icons.shopping_cart, size: 18),
+                          label: Text(
+                            qty == 0 ? "Add to Cart" : "Add More",
+                            style: const TextStyle(fontSize: 13),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppTheme.primaryColor,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          ),
+                        ),
+                      ),
+
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  Text(item.description, style: theme.textTheme.bodyMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: 4),
-                  Text("Rating: ${item.rating.toStringAsFixed(1)} ★", style: theme.textTheme.bodySmall?.copyWith(color: Colors.orange)),
-                  const SizedBox(height: 4),
-                  Text("Featured: ${item.featuredRestaurants.join(", ")}", style: theme.textTheme.bodySmall?.copyWith(color: Colors.blueGrey)),
-                  const SizedBox(height: 4),
-                  Text("Rs ${item.price.toStringAsFixed(2)}", style: theme.textTheme.bodyLarge?.copyWith(color: AppTheme.accentColor)),
-                  const SizedBox(height: 8),
-                  buildQuantityControls(item, theme),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -162,21 +183,17 @@ class _MenuListState extends State<MenuList> {
     final qty = quantities[item.id] ?? 0;
     return Row(
       children: [
-        if (qty > 0)
-          IconButton(icon: const Icon(Icons.remove_circle_outline), onPressed: () => remove(item.id)),
+        IconButton(
+          icon: const Icon(Icons.remove_circle, color: Colors.redAccent),
+          onPressed: qty > 0 ? () => remove(item.id) : null,
+          visualDensity: VisualDensity.compact,
+        ),
         Text("$qty", style: theme.textTheme.titleMedium),
-        const SizedBox(width: 4),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppTheme.primaryColor,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          ),
+        IconButton(
+          icon: const Icon(Icons.add_circle, color: Colors.green),
           onPressed: () => add(item.id),
-          child: Text(
-            qty == 0 ? "Add" : "Add More",
-            style: const TextStyle(color: Colors.white),
-          ),
-        )
+          visualDensity: VisualDensity.compact,
+        ),
       ],
     );
   }

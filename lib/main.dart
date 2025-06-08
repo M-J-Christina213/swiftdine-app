@@ -24,7 +24,7 @@ class SwiftDineApp extends StatelessWidget {
     return MaterialApp(
         title: 'Swiftdine App',
         theme: AppTheme.lightTheme,
-        darkTheme: ThemeData(),
+        darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system, 
         initialRoute: '/splash',
         routes: {

@@ -6,12 +6,13 @@ class CurrentOrdersTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      itemCount: 2,
-      itemBuilder: (context, index) {
-        return const CurrentOrderCard();
-      },
+      child: const Column(
+        children: [
+          CurrentOrderCard(),
+        ],
+      ),
     );
   }
 }

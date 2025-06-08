@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:swiftdine_app/themes/app_theme.dart';
 import 'package:swiftdine_app/views/orders/current_orders_tab.dart';
 import 'package:swiftdine_app/views/orders/past_orders_tab.dart';
-import 'package:swiftdine_app/themes/app_theme.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
@@ -10,18 +10,37 @@ class OrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      initialIndex: 0, // Past Orders first
       child: Scaffold(
+        backgroundColor: AppTheme.backgroundColor,
         appBar: AppBar(
-          title: const Text('Your Orders'),
-          backgroundColor: AppTheme.primaryColor,
-          bottom: const TabBar(
-            indicatorColor: Colors.white,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold),
-            tabs: [
-              Tab(text: 'Past Orders'),
-              Tab(text: 'Current Orders'),
-            ],
+          backgroundColor: AppTheme.primaryColor, 
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          title: const Text(
+            "Your Orders",
+            style: TextStyle(
+              color: Colors.white, 
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(48),
+            child: Container(
+              color: Colors.white, 
+              child: TabBar(
+                labelColor: AppTheme.primaryColor,
+                unselectedLabelColor: Colors.grey,
+                indicator: UnderlineTabIndicator(
+                  borderSide: BorderSide(width: 3.0, color: AppTheme.primaryColor),
+                  insets: EdgeInsets.symmetric(horizontal: 80.0), 
+                ),
+                tabs: const [
+                  Tab(text: 'Past Orders'),
+                  Tab(text: 'Current Orders'),
+                ],
+              ),
+            ),
           ),
         ),
         body: const TabBarView(

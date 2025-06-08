@@ -189,13 +189,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
-                  childAspectRatio: 0.75,
+                  childAspectRatio: 0.9, 
                 ),
                 itemBuilder: (context, i) {
                   final d = controller.destinations[i];
                   return DestinationCard(destination: d);
+
                 },
               ),
+
               
              
              MostPopularFoodsSection(),

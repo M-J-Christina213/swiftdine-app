@@ -17,24 +17,29 @@ class DestinationCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       clipBehavior: Clip.antiAlias,
       child: Column(
+        mainAxisSize: MainAxisSize.min, 
         children: [
           Image.asset(
             destination.imagePath,
-            height: 100,
+            height: 240, 
             width: double.infinity,
             fit: BoxFit.cover,
           ),
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), 
             child: Column(
+              mainAxisSize: MainAxisSize.min, 
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      destination.name,
-                      style: textTheme.titleLarge,
+                    Expanded(
+                      child: Text(
+                        destination.name,
+                        style: textTheme.titleLarge,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     if (destination.rating != null)
                       Row(
@@ -65,16 +70,16 @@ class DestinationCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
                 SizedBox(
                   width: double.infinity,
+                  height: 40,
                   child: ElevatedButton(
                     onPressed: () {
                       showModalBottomSheet(
                         context: context,
                         shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(20)),
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                         ),
                         builder: (context) {
                           return Padding(
@@ -85,8 +90,7 @@ class DestinationCard extends StatelessWidget {
                               children: [
                                 Text(
                                   'Top Picks in ${destination.name}',
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
+                                  style: Theme.of(context).textTheme.titleMedium,
                                 ),
                                 const SizedBox(height: 10),
                                 const ListTile(
@@ -100,7 +104,7 @@ class DestinationCard extends StatelessWidget {
                                   subtitle: Text('Seafood & family-friendly'),
                                 ),
                                 const SizedBox(height: 8),
-                                Text(
+                                const Text(
                                   'More coming soon...',
                                   style: TextStyle(color: Colors.grey),
                                 ),
@@ -111,14 +115,15 @@ class DestinationCard extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 255, 132, 0), 
+                      backgroundColor: const Color.fromARGB(255, 255, 132, 0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
+                      padding: EdgeInsets.zero,
                     ),
                     child: const Text(
                       'Explore Restaurants',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
                 ),

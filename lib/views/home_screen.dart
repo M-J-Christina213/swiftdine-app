@@ -3,10 +3,15 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:swiftdine_app/themes/app_theme.dart';
 import 'package:swiftdine_app/views/widgets/home/category_list.dart';
+import 'package:swiftdine_app/views/widgets/home/menu_data.dart';
+import 'package:swiftdine_app/views/widgets/home/mostpopfood.dart';
 import 'package:swiftdine_app/views/widgets/home/restaurant_card.dart';
+import 'package:swiftdine_app/views/widgets/home/reviews.dart';
 import 'package:swiftdine_app/views/widgets/home/search_bar.dart';
 import 'package:swiftdine_app/views/widgets/home/section_title.dart';
 import 'package:swiftdine_app/views/widgets/home/nearby_map.dart';
+import 'package:swiftdine_app/views/widgets/home/destination_card.dart';
+import 'package:swiftdine_app/controllers/home_controller.dart';
 import 'package:swiftdine_app/views/cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _location = 'Fetching your location...';
+  final HomeController controller = HomeController(); // Destination controller
 
   @override
   void initState() {
@@ -26,64 +32,64 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _fetchLocation() async {
-  try {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      if (!mounted) return;
-      setState(() {
-        _location = 'Location services are disabled';
-      });
-      return;
-    }
-
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
+    try {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
         if (!mounted) return;
         setState(() {
-          _location = 'Location permission denied';
+          _location = 'Location services are disabled';
         });
         return;
       }
-    }
 
-    if (permission == LocationPermission.deniedForever) {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          if (!mounted) return;
+          setState(() {
+            _location = 'Location permission denied';
+          });
+          return;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        if (!mounted) return;
+        setState(() {
+          _location = 'Permission denied forever';
+        });
+        return;
+      }
+
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        final place = placemarks.first;
+        if (!mounted) return;
+        setState(() {
+          _location = '${place.locality}, ${place.country}';
+        });
+      } else {
+        if (!mounted) return;
+        setState(() {
+          _location = 'Location not found';
+        });
+      }
+    } catch (e) {
       if (!mounted) return;
       setState(() {
-        _location = 'Permission denied forever';
-      });
-      return;
-    }
-
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-      position.latitude,
-      position.longitude,
-    );
-
-    if (placemarks.isNotEmpty) {
-      final place = placemarks.first;
-      if (!mounted) return;
-      setState(() {
-        _location = '${place.locality}, ${place.country}';
-      });
-    } else {
-      if (!mounted) return;
-      setState(() {
-        _location = 'Location not found';
+        _location = 'Failed to get location';
       });
     }
-  } catch (e) {
-    if (!mounted) return;
-    setState(() {
-      _location = 'Failed to get location';
-    });
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +156,52 @@ class _HomeScreenState extends State<HomeScreen> {
               const SectionTitle(title: "Restaurants Near You"),
               const SizedBox(height: 12),
               const NearbyMap(),
+
+             
+              const SizedBox(height: 24),
+              const SectionTitle(title: '🍽️ Find Food Near or Your Destination'),
+              const SizedBox(height: 8),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search for a location...',
+                  prefixIcon: const Icon(Icons.search),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  height: 200,
+                  color: Colors.grey[300],
+                  child: const Center(child: Text('🗺️ Map will be here')),
+                ),
+              ),
+              const SizedBox(height: 24),
+              GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: controller.destinations.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 0.75,
+                ),
+                itemBuilder: (context, i) {
+                  final d = controller.destinations[i];
+                  return DestinationCard(destination: d);
+                },
+              ),
+              
+             
+             MostPopularFoodsSection(),
+
               const SizedBox(height: 24),
               const SectionTitle(title: "Nearby Hidden Gems"),
               const SizedBox(height: 8),
@@ -162,7 +214,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       RestaurantCard(index: index, compact: true),
                 ),
               ),
+
+              ReviewsSection(menuItems: [
+                menuItems[0], menuItems[4]]), 
+              const SizedBox(height: 24),
+
             ],
+
+
           ),
         ),
       ),

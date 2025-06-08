@@ -1,5 +1,4 @@
-// models/menu_item.dart
-
+// lib/models/menu_item.dart
 class MenuItem {
   final String id;
   final String name;

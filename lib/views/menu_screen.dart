@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swiftdine_app/themes/app_theme.dart';
 import 'package:swiftdine_app/views/widgets/restaurant/category_menu_screen.dart';
+import 'package:swiftdine_app/views/cart_screen.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -43,7 +44,11 @@ final List<Map<String, String>> categories = const [
           IconButton(
             icon: const Icon(Icons.shopping_cart_outlined),
             onPressed: () {
-              // Navigate to Cart Page
+            
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const CartScreen()),
+              );
             },
           )
         ],

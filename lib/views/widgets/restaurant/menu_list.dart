@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:swiftdine_app/models/menu_item.dart';
 import 'package:swiftdine_app/themes/app_theme.dart';
+import 'package:swiftdine_app/views/providers/cart_provider.dart';
+import 'package:swiftdine_app/models/cart_item.dart';
+import 'package:provider/provider.dart';
 
 class MenuList extends StatefulWidget {
   final String? category;
@@ -191,7 +194,21 @@ class _MenuListState extends State<MenuList> {
         Text("$qty", style: theme.textTheme.titleMedium),
         IconButton(
           icon: const Icon(Icons.add_circle, color: Colors.green),
-          onPressed: () => add(item.id),
+          onPressed: () {
+              add(item.id); 
+              Provider.of<CartProvider>(context, listen: false).addItem(
+                CartItem(
+                  name: item.name,
+                  description: item.description,
+                  featuredRestaurant: item.featuredRestaurants.join(', '),
+                  price: item.price,
+                ),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("${item.name} added to cart")),
+              );
+            },
+
           visualDensity: VisualDensity.compact,
         ),
       ],

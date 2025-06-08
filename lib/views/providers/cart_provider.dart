@@ -1,27 +1,26 @@
-import 'package:flutter/foundation.dart';
-
-class CartItem {
-  final String name;
-  final double price;
-  int quantity;
-
-  CartItem({required this.name, required this.price, this.quantity = 1});
-}
+import 'package:flutter/material.dart';
+import 'package:swiftdine_app/models/cart_item.dart';
 
 class CartProvider with ChangeNotifier {
   final List<CartItem> _items = [];
 
   List<CartItem> get items => _items;
 
-  double get totalPrice => _items.fold(0, (sum, item) => sum + item.quantity * item.price);
+  void addItem(CartItem newItem) {
+    final index = _items.indexWhere((item) =>
+        item.name == newItem.name &&
+        item.featuredRestaurant == newItem.featuredRestaurant);
 
-  void addItem(CartItem item) {
-    final index = _items.indexWhere((element) => element.name == item.name);
-    if (index != -1) {
-      _items[index].quantity += item.quantity;
+    if (index >= 0) {
+      _items[index].quantity += 1;
     } else {
-      _items.add(item);
+      _items.add(newItem);
     }
+    notifyListeners();
+  }
+
+  void updateQuantity(int index, int newQty) {
+    _items[index].quantity = newQty;
     notifyListeners();
   }
 
@@ -30,13 +29,11 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateQuantity(int index, int quantity) {
-    _items[index].quantity = quantity;
-    notifyListeners();
-  }
-
   void clearCart() {
     _items.clear();
     notifyListeners();
   }
+
+  double get totalPrice => _items.fold(
+      0.0, (sum, item) => sum + (item.price * item.quantity));
 }

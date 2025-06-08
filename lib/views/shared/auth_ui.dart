@@ -22,14 +22,23 @@ Widget buildAuthUI(
     body: Stack(
       children: [
         Positioned.fill(
-          child: Image.asset(
-            'assets/images/auth/auth_background.png',
-            fit: BoxFit.cover,
-          ),
+          child: Image.network(
+          'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/ac/0f/85/salle-du-restaurant-soir.jpg?w=900&h=500&s=1',
+          fit: BoxFit.cover,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+          errorBuilder: (context, error, stackTrace) {
+            return Center(child: Text('Failed to load image'));
+          },
         ),
-        Positioned.fill(
-          child: Container(color: Colors.black.withOpacity(0.4)),
-        ),
+      ),
+      Positioned.fill(
+        child: Container(color: Colors.black.withOpacity(0.4)),
+      ),
         Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(20),

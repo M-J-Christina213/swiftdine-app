@@ -26,59 +26,64 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _fetchLocation() async {
-    try {
-      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        setState(() {
-          _location = 'Location services are disabled';
-        });
-        return;
-      }
-
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          setState(() {
-            _location = 'Location permission denied';
-          });
-          return;
-        }
-      }
-
-      if (permission == LocationPermission.deniedForever) {
-        setState(() {
-          _location = 'Permission denied forever';
-        });
-        return;
-      }
-
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
-
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-        position.latitude,
-        position.longitude,
-      );
-
-      if (placemarks.isNotEmpty) {
-        final place = placemarks.first;
-        setState(() {
-          _location =
-              '${place.locality}, ${place.country}';
-        });
-      } else {
-        setState(() {
-          _location = 'Location not found';
-        });
-      }
-    } catch (e) {
+  try {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      if (!mounted) return;
       setState(() {
-        _location = 'Failed to get location';
+        _location = 'Location services are disabled';
+      });
+      return;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        if (!mounted) return;
+        setState(() {
+          _location = 'Location permission denied';
+        });
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      if (!mounted) return;
+      setState(() {
+        _location = 'Permission denied forever';
+      });
+      return;
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+    );
+
+    if (placemarks.isNotEmpty) {
+      final place = placemarks.first;
+      if (!mounted) return;
+      setState(() {
+        _location = '${place.locality}, ${place.country}';
+      });
+    } else {
+      if (!mounted) return;
+      setState(() {
+        _location = 'Location not found';
       });
     }
+  } catch (e) {
+    if (!mounted) return;
+    setState(() {
+      _location = 'Failed to get location';
+    });
   }
+}
 
   @override
   Widget build(BuildContext context) {

@@ -11,45 +11,47 @@ import 'views/profile/payment_screen.dart';
 import 'views/profile/address_screen.dart';
 import 'views/profile/settings.dart';
 import 'views/profile/support_screen.dart';
+import 'views/providers/theme_proviser.dart';
 
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => CartProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ],
       child: const SwiftDineApp(),
     ),
   );
 }
-
 
 class SwiftDineApp extends StatelessWidget {
   const SwiftDineApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
-        title: 'Swiftdine App',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system, 
-        initialRoute: '/splash',
-        routes: {
-          '/': (context) => const SplashScreen(),
-          '/splash': (context) => const SplashScreen(),
-          '/login': (context) => const LoginScreen(),
-          '/home': (context) => const BottomNavBarScreen(),
-          '/orders': (context) => const OrdersScreen(),
-          '/favorites': (context) => const FavoritesScreen(),
-          '/payments': (context) => const PaymentsScreen(),
-          '/addresses': (context) => const AddressScreen(),
-          '/settings': (context) => const SettingsScreen(),
-          '/support': (context) => const SupportScreen(),
-          
-        },
-
-        debugShowCheckedModeBanner: false,
-
+      title: 'Swiftdine App',
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeProvider.themeMode, // <- here is the reactive themeMode
+      initialRoute: '/splash',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/splash': (context) => const SplashScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/home': (context) => const BottomNavBarScreen(),
+        '/orders': (context) => const OrdersScreen(),
+        '/favorites': (context) => const FavoritesScreen(),
+        '/payments': (context) => const PaymentsScreen(),
+        '/addresses': (context) => const AddressScreen(),
+        '/settings': (context) => const SettingsScreen(),
+        '/support': (context) => const SupportScreen(),
+      },
+      debugShowCheckedModeBanner: false,
     );
   }
 }

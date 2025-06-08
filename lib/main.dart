@@ -37,7 +37,7 @@ class SwiftDineApp extends StatelessWidget {
       title: 'Swiftdine App',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: themeProvider.themeMode, // <- here is the reactive themeMode
+      themeMode: themeProvider.themeMode, 
       initialRoute: '/splash',
       routes: {
         '/': (context) => const SplashScreen(),

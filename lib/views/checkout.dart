@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../themes/app_theme.dart';
+import '../views/orders_screen.dart';
+import '../views/providers/cart_provider.dart';
+import '../controllers/checkout_controller.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -9,167 +14,215 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   final _formKey = GlobalKey<FormState>();
-  String selectedPaymentMethod = 'Card';
+  final controller = CheckoutController();
+  String paymentMethod = 'Card';
 
-  void _placeOrder() {
-    if (_formKey.currentState!.validate()) {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          title: const Row(
-            children: [
-              Icon(Icons.check_circle, color: Colors.green, size: 30),
-              SizedBox(width: 8),
-              Text("Order Confirmed"),
-            ],
-          ),
-          content: const Text(
-            "Thank you for ordering from SwiftDine!\n\nYour order has been sent to the restaurant.\nA receipt has been emailed to you.\n\nYou can live track your order now.",
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // close dialog
-                Navigator.pushReplacementNamed(context, '/orders'); // go to orders screen
-              },
-              child: const Text("Live Track Order"),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("OK"),
-            ),
-          ],
-        ),
-      );
-    }
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Colors.orange;
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartItems = cartProvider.items;
+    final subtotal = cartProvider.totalPrice;
+    final tax = subtotal * 0.05;
+    final deliveryFee = 200.0;
+    final total = subtotal + tax + deliveryFee;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Checkout"),
-        backgroundColor: themeColor,
-      ),
+      appBar: AppBar(title: const Text('Checkout')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Order Summary", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Card(
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: ListTile(
-                leading: Image.asset('assets/images/sample_food.jpg', width: 50, height: 50),
-                title: const Text("Grilled Chicken"),
-                subtitle: const Text("Qty: 2"),
-                trailing: const Text("Rs 800.00"),
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Divider(),
-            _buildPriceDetailRow("Subtotal", "Rs 800.00"),
-            _buildPriceDetailRow("Tax (5%)", "Rs 40.00"),
-            _buildPriceDetailRow("Delivery Fee", "Rs 100.00"),
-            const Divider(),
-            _buildPriceDetailRow("Total", "Rs 940.00", bold: true),
-            const SizedBox(height: 20),
-            const Text("Personal Information", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            Form(
-              key: _formKey,
-              child: Column(children: [
-                _buildInputField("Full Name"),
-                _buildInputField("Phone Number"),
-                _buildInputField("Email Address"),
-                _buildInputField("Address"),
-                _buildInputField("City"),
-                _buildInputField("Postal Code"),
-              ]),
-            ),
-            const SizedBox(height: 20),
-            const Text("Payment Method", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            _buildPaymentOption("Card"),
-            if (selectedPaymentMethod == 'Card') ...[
-              _buildInputField("Cardholder Name"),
-              _buildInputField("Card Number"),
-              Row(
+            _buildSection(
+              title: 'Order Summary',
+              child: Column(
                 children: [
-                  Expanded(child: _buildInputField("MM/YY")),
-                  const SizedBox(width: 10),
-                  Expanded(child: _buildInputField("CVV")),
+                  ...cartItems.map((item) => Card(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: ListTile(
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(item.imagePath, width: 70, height: 70, fit: BoxFit.cover),
+                          ),
+                          title: Text(item.name),
+                          subtitle: Text('Quantity: ${item.quantity}'),
+                          trailing: Text('Rs ${(item.price * item.quantity).toStringAsFixed(2)}'),
+                        ),
+                      )),
+                  const Divider(height: 30),
+                  _buildAmountRow('Subtotal', subtotal),
+                  _buildAmountRow('Tax (5%)', tax),
+                  _buildAmountRow('Delivery Fee', deliveryFee),
+                  _buildAmountRow('Grand Total', total, isBold: true, color: AppTheme.primaryColor),
                 ],
               ),
-            ],
-            _buildPaymentOption("Cash on Delivery"),
-            _buildPaymentOption("Bank Transfer"),
-            if (selectedPaymentMethod == 'Bank Transfer') ...[
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Text("Bank Account No: 123-456-789-00\nSwiftDine Bank", style: TextStyle(fontSize: 14)),
-              ),
-            ],
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: _placeOrder,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: themeColor,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                textStyle: const TextStyle(fontSize: 16),
-              ),
-              child: const Center(child: Text("Place Order Now")),
             ),
             const SizedBox(height: 30),
+            _buildSection(
+              title: 'Personal Information',
+              child: Form(
+                key: _formKey,
+                child: Column(children: [
+                  _buildTextField(controller.nameController, 'Full Name'),
+                  _buildTextField(controller.phoneController, 'Phone Number'),
+                  _buildTextField(controller.emailController, 'Email Address'),
+                  _buildTextField(controller.addressController, 'Address'),
+                  Row(
+                    children: [
+                      Expanded(child: _buildTextField(controller.cityController, 'City')),
+                      const SizedBox(width: 10),
+                      Expanded(child: _buildTextField(controller.postalController, 'Postal Code')),
+                    ],
+                  ),
+                ]),
+              ),
+            ),
+            const SizedBox(height: 30),
+            _buildSection(
+              title: 'Payment Method',
+              child: Column(
+                children: [
+                  _buildPaymentOption('Card', Icons.credit_card),
+                  _buildPaymentOption('Bank Transfer', Icons.account_balance),
+                  _buildPaymentOption('Cash on Delivery', Icons.local_shipping),
+                  const SizedBox(height: 10),
+                  if (paymentMethod == 'Card') ...[
+                    _buildTextField(controller.cardNameController, 'Cardholder Name'),
+                    _buildTextField(controller.cardNumberController, 'Card Number'),
+                    Row(
+                      children: [
+                        Expanded(child: _buildTextField(controller.expiryController, 'MM/YY')),
+                        const SizedBox(width: 10),
+                        Expanded(child: _buildTextField(controller.cvvController, 'CVV')),
+                      ],
+                    ),
+                  ],
+                  if (paymentMethod == 'Bank Transfer') ...[
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.only(top: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Text('Account No: 1234567890\nBank: SwiftBank Lanka\nUse your name as reference.'),
+                    )
+                  ],
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _showConfirmationDialog(context);
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.primaryColor,
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              ),
+              child: const Text('Place Order Now', style: TextStyle(color: Colors.white)),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPriceDetailRow(String label, String value, {bool bold = false}) {
+  Widget _buildAmountRow(String label, double amount, {bool isBold = false, Color? color}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontWeight: bold ? FontWeight.bold : FontWeight.normal)),
-          Text(value, style: TextStyle(fontWeight: bold ? FontWeight.bold : FontWeight.normal)),
+          Text(label, style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal)),
+          Text('Rs ${amount.toStringAsFixed(2)}',
+              style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal, color: color)),
         ],
       ),
     );
   }
 
-  Widget _buildInputField(String label) {
+  Widget _buildTextField(TextEditingController controller, String label) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
+        controller: controller,
+        validator: (value) => value == null || value.isEmpty ? 'Required' : null,
         decoration: InputDecoration(
           labelText: label,
-          border: const OutlineInputBorder(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
-        validator: (value) => value == null || value.isEmpty ? 'Required field' : null,
       ),
     );
   }
 
-  Widget _buildPaymentOption(String method) {
+  Widget _buildSection({required String title, required Widget child}) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(title, style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 10),
+        child,
+      ]),
+    );
+  }
+
+  Widget _buildPaymentOption(String method, IconData icon) {
     return RadioListTile<String>(
       value: method,
-      groupValue: selectedPaymentMethod,
-      onChanged: (value) => setState(() => selectedPaymentMethod = value!),
-      title: Text(method),
+      groupValue: paymentMethod,
+      onChanged: (value) => setState(() => paymentMethod = value!),
+      activeColor: AppTheme.primaryColor,
+      title: Row(
+        children: [
+          Icon(icon, color: AppTheme.primaryColor),
+          const SizedBox(width: 10),
+          Text(method),
+        ],
+      ),
+    );
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.check_circle, color: Colors.green, size: 28),
+            SizedBox(width: 10),
+            Text('Order Placed!'),
+          ],
+        ),
+        content: const Text('Thank you for ordering! Your order has been sent to the restaurant. '
+            'A receipt has been emailed to you. You can now track your order live.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => const OrdersScreen()),
+              );
+            },
+            child: const Text('OK'),
+          )
+        ],
+      ),
     );
   }
 }

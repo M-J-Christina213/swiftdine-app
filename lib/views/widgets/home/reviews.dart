@@ -44,7 +44,7 @@ class ReviewsSection extends StatelessWidget {
                   subtitle: 'Tourist from Singapore',
                   review:
                       '“As a foodie from Singapore, I\'m super picky with flavor, and SwiftDine did not disappoint! Loved the ease of browsing restaurant menus and reading real reviews from other tourists and locals.”',
-                  imagePath: 'assets/images/home/r1.jpeg',
+                  imagePath: 'assets/images/r1.jpeg',
                 ),
                 _testimonialCard(
                   context,
@@ -52,7 +52,7 @@ class ReviewsSection extends StatelessWidget {
                   subtitle: 'Local',
                   review:
                       '“SwiftDine is a game changer. I usually struggle to recommend good places to my foreign friends, but this made it so much easier. The app helps find hidden gems in one go. Proud to see Sri Lankan options delivering this kind of service!”',
-                  imagePath: 'assets/images/home/r2.jpeg',
+                  imagePath: 'assets/images/r2.jpeg',
                 ),
                 _testimonialCard(
                   context,
@@ -60,7 +60,7 @@ class ReviewsSection extends StatelessWidget {
                   subtitle: 'Tourist from Australia',
                   review:
                       '“We love exploring food spots during our holidays, and SwiftDine offered great local recommendations with smooth delivery tracking. A must-have for foodies visiting Sri Lanka!”',
-                  imagePath: 'assets/images/home/r3.jpeg',
+                  imagePath: 'assets/images/r3.jpeg',
                 ),
               ],
             );
@@ -92,61 +92,59 @@ class ReviewsSection extends StatelessWidget {
   }
 
   Widget _testimonialCard(
-    BuildContext context, {
-    required String name,
-    required String subtitle,
-    required String review,
-    required String imagePath,
-  }) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeOut,
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 6)],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                backgroundImage: AssetImage(imagePath),
-                radius: 26,
-              ),
-              SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(name,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey[800])),
-                  Text(subtitle, style: TextStyle(color: Colors.grey[500])),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Row(
-            children: List.generate(
-              5,
-              (index) => Icon(Icons.star, color: Colors.amber, size: 18),
+  BuildContext context, {
+  required String name,
+  required String subtitle,
+  required String review,
+  required String imagePath,
+}) {
+  return Container(
+    padding: EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(14),
+      boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 6)],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min, 
+      children: [
+        Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: AssetImage(imagePath),
+              radius: 26,
             ),
-          ),
-          SizedBox(height: 8),
-          Expanded(
-            child: Text(
-              review,
-              style: TextStyle(color: Colors.grey[700], fontSize: 14),
+            SizedBox(width: 12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.grey[800]),
+                ),
+                Text(subtitle, style: TextStyle(color: Colors.grey[500])),
+              ],
             ),
+          ],
+        ),
+        SizedBox(height: 8),
+        Row(
+          children: List.generate(
+            5,
+            (index) => Icon(Icons.star, color: Colors.amber, size: 18),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+        SizedBox(height: 8),
+        Text(
+          review,
+          style: TextStyle(color: Colors.grey[700], fontSize: 14),
+        ),
+      ],
+    ),
+  );
+}
 }
 
 class LeaveReviewDialog extends StatefulWidget {

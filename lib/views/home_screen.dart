@@ -9,7 +9,6 @@ import 'package:swiftdine_app/views/widgets/home/restaurant_card.dart';
 import 'package:swiftdine_app/views/widgets/home/reviews.dart';
 import 'package:swiftdine_app/views/widgets/home/search_bar.dart';
 import 'package:swiftdine_app/views/widgets/home/section_title.dart';
-import 'package:swiftdine_app/views/widgets/home/nearby_map.dart';
 import 'package:swiftdine_app/views/widgets/home/destination_card.dart';
 import 'package:swiftdine_app/controllers/home_controller.dart';
 import 'package:swiftdine_app/views/cart_screen.dart';
@@ -153,9 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              const SectionTitle(title: "Restaurants Near You"),
-              const SizedBox(height: 12),
-              const NearbyMap(),
+              
 
              
               const SizedBox(height: 24),
@@ -176,10 +173,11 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 12),
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: Container(
+                child: Image.asset(
+                  'assets/images/map.png',
                   height: 200,
-                  color: Colors.grey[300],
-                  child: const Center(child: Text('🗺️ Map will be here')),
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(height: 24),

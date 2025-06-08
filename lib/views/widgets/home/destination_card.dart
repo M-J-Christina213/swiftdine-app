@@ -34,14 +34,14 @@ class DestinationCard extends StatelessWidget {
                   children: [
                     Text(
                       destination.name,
-                      style: textTheme.titleLarge, 
+                      style: textTheme.titleLarge,
                     ),
                     if (destination.rating != null)
                       Row(
                         children: [
                           Icon(
                             Icons.star,
-                            color: colorScheme.secondary, 
+                            color: colorScheme.secondary,
                             size: 16,
                           ),
                           const SizedBox(width: 4),
@@ -56,7 +56,7 @@ class DestinationCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   '${destination.restaurantCount} restaurants',
-                  style: textTheme.bodyMedium, 
+                  style: textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 6),
                 Text(
@@ -70,12 +70,51 @@ class DestinationCard extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      
+                      showModalBottomSheet(
+                        context: context,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(20)),
+                        ),
+                        builder: (context) {
+                          return Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Top Picks in ${destination.name}',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                const SizedBox(height: 10),
+                                const ListTile(
+                                  leading: Icon(Icons.restaurant),
+                                  title: Text('Spicy Flame'),
+                                  subtitle: Text('Great for local cuisine lovers'),
+                                ),
+                                const ListTile(
+                                  leading: Icon(Icons.restaurant),
+                                  title: Text('Ocean Bites'),
+                                  subtitle: Text('Seafood & family-friendly'),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'More coming soon...',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: colorScheme.primary, 
+                      backgroundColor: const Color.fromARGB(255, 255, 132, 0), 
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                     child: const Text(
                       'Explore Restaurants',

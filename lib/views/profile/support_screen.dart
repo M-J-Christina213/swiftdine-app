@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class SupportScreen extends StatelessWidget {
+  const SupportScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
-      body: const Center(child: Text('Customize your app preferences.')),
+      appBar: AppBar(title: const Text('Help & Support')),
+      body: const Center(child: Text('Get support or find FAQs here.')),
     );
   }
 }

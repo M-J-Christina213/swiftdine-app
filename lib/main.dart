@@ -5,6 +5,13 @@ import 'views/login_screen.dart';
 import 'views/widgets/bottom_nav_bar.dart';
 import 'package:swiftdine_app/views/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
+import 'views/orders_screen.dart';
+import 'views/profile/favourites.dart';
+import 'views/profile/payment_screen.dart';
+import 'views/profile/address_screen.dart';
+import 'views/profile/settings.dart';
+import 'views/profile/support_screen.dart';
+
 
 void main() {
   runApp(
@@ -32,7 +39,15 @@ class SwiftDineApp extends StatelessWidget {
           '/splash': (context) => const SplashScreen(),
           '/login': (context) => const LoginScreen(),
           '/home': (context) => const BottomNavBarScreen(),
+          '/orders': (context) => const OrdersScreen(),
+          '/favorites': (context) => const FavoritesScreen(),
+          '/payments': (context) => const PaymentsScreen(),
+          '/addresses': (context) => const AddressScreen(),
+          '/settings': (context) => const SettingsScreen(),
+          '/support': (context) => const SupportScreen(),
+          
         },
+
         debugShowCheckedModeBanner: false,
 
     );

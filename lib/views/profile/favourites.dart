@@ -59,40 +59,49 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     });
   }
 
-  Widget buildFoodCard(Map<String, dynamic> item, bool isMainMeal) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 4,
-      child: ListTile(
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.asset(
-            item['image'],
-            width: 70,
-            height: 70,
-            fit: BoxFit.cover,
+      Widget buildFoodCard(Map<String, dynamic> item, bool isMainMeal) {
+      return Card(
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 4,
+        child: ListTile(
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              item['image'],
+              width: 100,    
+              height: 200,   
+              fit: BoxFit.cover,
+            ),
           ),
+          title: Text(item['name'], style: const TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(item['description']),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Icon(Icons.star, color: Colors.amber, size: 16), // Gold star
+                  const SizedBox(width: 4),
+                  Text(item['reviews'], style: const TextStyle(color: Colors.grey)),
+                ],
+              ),
+              Text(
+                'Restaurant: ${item['restaurant']}',
+                style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
+              ),
+            ],
+          ),
+          trailing: IconButton(
+            icon: const Icon(Icons.favorite, color: Colors.red),
+            onPressed: () => removeFromFavorites(item, isMainMeal),
+          ),
+          isThreeLine: true,
         ),
-        title: Text(item['name'], style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(item['description']),
-            const SizedBox(height: 4),
-            Text(item['reviews'], style: const TextStyle(color: Colors.grey)),
-            Text('Restaurant: ${item['restaurant']}',
-                style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
-          ],
-        ),
-        trailing: IconButton(
-          icon: const Icon(Icons.favorite, color: Colors.red),
-          onPressed: () => removeFromFavorites(item, isMainMeal),
-        ),
-        isThreeLine: true,
-      ),
-    );
-  }
+      );
+    }
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +116,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             const SizedBox(height: 8),
             if (mainMeals.isEmpty)
               const Text("No main meals in favorites."),
-            ...mainMeals.map((meal) => buildFoodCard(meal, true)).toList(),
+            ...mainMeals.map((meal) => buildFoodCard(meal, true)),
             const SizedBox(height: 20),
             const Text("Desserts", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             if (desserts.isEmpty)
               const Text("No desserts in favorites."),
-            ...desserts.map((dessert) => buildFoodCard(dessert, false)).toList(),
+            ...desserts.map((dessert) => buildFoodCard(dessert, false)),
           ],
         ),
       ),

@@ -141,11 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   "Help & Support",
                   onTap: () => Navigator.pushNamed(context, '/support'),
                 ),
-                _buildListTile(
-                  Icons.info_outline,
-                  "About App",
-                  onTap: () => Navigator.pushNamed(context, '/about'),
-                ),
+                
                 _buildListTile(
                   Icons.logout,
                   "Log out",

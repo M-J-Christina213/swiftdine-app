@@ -216,7 +216,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             onPressed: () {
               Navigator.of(ctx).pop();
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const OrdersScreen()),
+                MaterialPageRoute(builder: (_) => const OrderScreen()),
               );
             },
             child: const Text('OK'),

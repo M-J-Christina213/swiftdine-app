@@ -20,7 +20,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     const HomeScreen(),
     const MenuScreen(),
     const OffersScreen(),
-    const OrdersScreen(),
+    const OrderScreen(),
     const ProfileScreen(),
   ];
 

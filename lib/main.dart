@@ -44,7 +44,7 @@ class SwiftDineApp extends StatelessWidget {
         '/splash': (context) => const SplashScreen(),
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const BottomNavBarScreen(),
-        '/orders': (context) => const OrdersScreen(),
+        '/orders': (context) => const OrderScreen(),
         '/favorites': (context) => const FavoritesScreen(),
         '/payments': (context) => const PaymentsScreen(),
         '/addresses': (context) => const AddressScreen(),

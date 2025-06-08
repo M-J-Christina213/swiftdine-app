@@ -41,4 +41,21 @@ class AppTheme {
     ),
     colorScheme: ColorScheme.dark().copyWith(secondary: accentColor),
   );
+
+  static final TextStyle headingStyle = GoogleFonts.nunito(
+    color: headingColor,
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+  );
+
+  static final TextStyle descriptionStyle = GoogleFonts.nunito(
+    color: descriptionColor,
+    fontSize: 14,
+  );
+
+  static final TextStyle priceStyle = GoogleFonts.nunito(
+    color: primaryColor,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+  );
 }

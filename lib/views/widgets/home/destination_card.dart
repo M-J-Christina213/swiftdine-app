@@ -21,7 +21,7 @@ class DestinationCard extends StatelessWidget {
         children: [
           Image.asset(
             destination.imagePath,
-            height: 240, 
+            height: 80, 
             width: double.infinity,
             fit: BoxFit.cover,
           ),

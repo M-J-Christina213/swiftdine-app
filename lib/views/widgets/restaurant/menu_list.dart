@@ -1,98 +1,166 @@
 import 'package:flutter/material.dart';
 import 'package:swiftdine_app/models/menu_item.dart';
+import 'package:swiftdine_app/themes/app_theme.dart';
 
 class MenuList extends StatefulWidget {
-  const MenuList({super.key});
+  final String? category;
+  final String? restaurant;
+
+  const MenuList({super.key, this.category, this.restaurant});
 
   @override
   State<MenuList> createState() => _MenuListState();
 }
 
 class _MenuListState extends State<MenuList> {
-  final List<MenuItem> menuItems = [
-    MenuItem(
-      id: "1",
-      name: "Cheese Kottu Roti",
-      description: "Spicy chopped godamba roti with vegetables, chicken and cheese.",
-      price: 850.00,
-      imageUrl: "https://tb-static.uber.com/prod/image-proc/...jpg",
-      category: "Sri Lankan",
-    ),
-    MenuItem(
-      id: "2",
-      name: "Egg Hoppers",
-      description: "Crispy bowl-shaped pancakes with a soft egg center.",
-      price: 450.00,
-      imageUrl: "https://i0.wp.com/www.lavenderandlovage.com/...jpg",
-      category: "Sri Lankan",
-    ),
-    MenuItem(
-      id: "3",
-      name: "Devilled Prawns",
-      description: "Wok-tossed prawns in tangy, spicy sauce with bell peppers.",
-      price: 1750.00,
-      imageUrl: "https://media.cntravellerme.com/photos/66cc5cb7...jpg",
-      category: "Seafood",
-    ),
-    // Add more items...
+  final List<MenuItem> allItems = [
+    MenuItem(id: "1", name: "Kottu Roti", description: "Chopped flatbread with veggies, egg, and chicken.", price: 850.0, imagePath: "assets/images/kottu.jpg", category: "Sri Lankan Special", featuredRestaurants: ["Rice Point"], rating: 4.5, likeCount: 42),
+    MenuItem(id: "2", name: "Devilled Prawns", description: "Tangy stir-fried prawns with bell peppers.", price: 1750.0, imagePath: "assets/images/prawns.jpg", category: "Seafood Dishes", featuredRestaurants: ["Sea Harvest", "Ocean Bliss"], rating: 4.7, likeCount: 38),
+    MenuItem(id: "3", name: "Chicken Biryani", description: "Fragrant rice dish with marinated chicken.", price: 1000.0, imagePath: "assets/images/biryani.jpg", category: "Chicken Dishes", featuredRestaurants: ["Spice Fusion"], rating: 4.2, likeCount: 60),
+    MenuItem(id: "4", name: "Spicy Noodles", description: "Hot and spicy Asian-style noodles.", price: 890.0, imagePath: "assets/images/noodles.jpg", category: "Spicy Dishes", featuredRestaurants: ["Spice Fusion"], rating: 4.1, likeCount: 22),
+    MenuItem(id: "5", name: "Butter Chicken", description: "Creamy and rich Indian chicken curry.", price: 1200.0, imagePath: "assets/images/butter_chicken.jpg", category: "Indian", featuredRestaurants: ["Tandoori Tales"], rating: 4.8, likeCount: 71),
+    MenuItem(id: "6", name: "Sweet and Sour Chicken", description: "Crispy chicken in sweet & tangy sauce.", price: 980.0, imagePath: "assets/images/sweet_sour.jpg", category: "Chinese", featuredRestaurants: ["Dragon Palace"], rating: 4.3, likeCount: 45),
+    MenuItem(id: "7", name: "Green Curry", description: "Spicy Thai green curry with vegetables.", price: 1100.0, imagePath: "assets/images/green_curry.jpg", category: "Thai", featuredRestaurants: ["Thai Treat"], rating: 4.6, likeCount: 33),
+    MenuItem(id: "8", name: "Watalappam", description: "Sri Lankan dessert with jaggery and coconut.", price: 450.0, imagePath: "assets/images/watalappam.jpg", category: "Desserts", featuredRestaurants: ["Rice Point"], rating: 4.9, likeCount: 55),
+    MenuItem(id: "9", name: "Cuttlefish Curry", description: "Rich seafood curry with tender cuttlefish.", price: 1550.0, imagePath: "assets/images/cuttlefish.jpg", category: "Seafood Dishes", featuredRestaurants: ["Sea Harvest"], rating: 4.4, likeCount: 30),
+    MenuItem(id: "10", name: "Tandoori Chicken", description: "Indian spiced grilled chicken.", price: 1250.0, imagePath: "assets/images/tandoori.jpg", category: "Indian", featuredRestaurants: ["Tandoori Tales"], rating: 4.7, likeCount: 63),
+    MenuItem(id: "11", name: "Hot Butter Cuttlefish", description: "Crispy spicy seafood delight.", price: 1700.0, imagePath: "assets/images/hbc.jpg", category: "Spicy Dishes", featuredRestaurants: ["Ocean Bliss"], rating: 4.6, likeCount: 41),
+    MenuItem(id: "12", name: "Vegetable Fried Rice", description: "Classic Chinese-style fried rice.", price: 750.0, imagePath: "assets/images/fried_rice.jpg", category: "Chinese", featuredRestaurants: ["Dragon Palace"], rating: 4.0, likeCount: 27),
+    MenuItem(id: "13", name: "Pad Thai", description: "Famous Thai stir-fried noodle dish.", price: 950.0, imagePath: "assets/images/pad_thai.jpg", category: "Thai", featuredRestaurants: ["Thai Treat"], rating: 4.5, likeCount: 36),
+    MenuItem(id: "14", name: "Pol Sambol Sandwich", description: "Toasted bread with coconut sambol.", price: 400.0, imagePath: "assets/images/sandwich.jpg", category: "Sri Lankan Special", featuredRestaurants: ["Rice Point"], rating: 4.1, likeCount: 19),
+    MenuItem(id: "15", name: "Fish Ambulthiyal", description: "Sour fish curry with goraka.", price: 1350.0, imagePath: "assets/images/ambulthiyal.jpg", category: "Sri Lankan Special", featuredRestaurants: ["Rice Point"], rating: 4.6, likeCount: 50),
+    MenuItem(id: "16", name: "Crispy Chicken Wings", description: "Spicy battered wings with dip.", price: 900.0, imagePath: "assets/images/wings.jpg", category: "Chicken Dishes", featuredRestaurants: ["Spice Fusion"], rating: 4.2, likeCount: 34),
+    MenuItem(id: "17", name: "Paneer Tikka", description: "Grilled Indian cottage cheese skewers.", price: 950.0, imagePath: "assets/images/paneer.jpg", category: "Indian", featuredRestaurants: ["Tandoori Tales"], rating: 4.3, likeCount: 26),
+    MenuItem(id: "18", name: "Chocolate Lava Cake", description: "Molten-centered chocolate dessert.", price: 600.0, imagePath: "assets/images/lava_cake.jpg", category: "Desserts", featuredRestaurants: ["Rice Point"], rating: 4.9, likeCount: 47),
+    MenuItem(id: "19", name: "Coconut Roti", description: "Flatbread with coconut, served hot.", price: 300.0, imagePath: "assets/images/coconut_roti.jpg", category: "Sri Lankan Special", featuredRestaurants: ["Rice Point"], rating: 4.0, likeCount: 21),
+    MenuItem(id: "20", name: "Mango Sticky Rice", description: "Sweet mango with coconut sticky rice.", price: 700.0, imagePath: "assets/images/mango_rice.jpg", category: "Desserts", featuredRestaurants: ["Thai Treat"], rating: 4.8, likeCount: 29),
+    MenuItem(id: "21", name: "Chicken Curry", description: "Rich and spicy traditional curry.", price: 1150.0, imagePath: "assets/images/chicken_curry.jpg", category: "Chicken Dishes", featuredRestaurants: ["Spice Fusion"], rating: 4.5, likeCount: 58),
+    MenuItem(id: "22", name: "Tom Yum Soup", description: "Hot & sour Thai seafood soup.", price: 950.0, imagePath: "assets/images/tom_yum.jpg", category: "Thai", featuredRestaurants: ["Thai Treat"], rating: 4.4, likeCount: 35),
+    MenuItem(id: "23", name: "Gulab Jamun", description: "Indian syrup-soaked dessert balls.", price: 500.0, imagePath: "assets/images/gulab_jamun.jpg", category: "Desserts", featuredRestaurants: ["Tandoori Tales"], rating: 4.7, likeCount: 40),
+    MenuItem(id: "24", name: "Spicy Egg Noodles", description: "Egg noodles tossed in hot sauce.", price: 850.0, imagePath: "assets/images/spicy_noodles.jpg", category: "Spicy Dishes", featuredRestaurants: ["Spice Fusion"], rating: 4.2, likeCount: 23),
   ];
 
-  // Tracks quantity per item ID
-  final Map<String, int> itemQuantities = {};
+  Map<String, int> quantities = {};
 
-  void increaseQuantity(String id) {
+  void add(String id) {
     setState(() {
-      itemQuantities[id] = (itemQuantities[id] ?? 0) + 1;
+      quantities[id] = (quantities[id] ?? 0) + 1;
     });
+  }
+
+  void remove(String id) {
+    final qty = quantities[id] ?? 0;
+    if (qty > 1) {
+      setState(() {
+        quantities[id] = qty - 1;
+      });
+    } else {
+      setState(() {
+        quantities.remove(id);
+      });
+    }
+  }
+
+  List<MenuItem> getFilteredItems() {
+    return allItems.where((item) {
+      final matchCategory = widget.category == null || item.category == widget.category;
+      final matchRestaurant = widget.restaurant == null || item.featuredRestaurants.contains(widget.restaurant);
+      return matchCategory && matchRestaurant;
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final filtered = getFilteredItems();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 8),
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text("Menu", style: theme.textTheme.titleLarge),
-        ),
-        ...menuItems.map((item) {
-          final quantity = itemQuantities[item.id] ?? 0;
-          final totalPrice = (item.price * quantity).toStringAsFixed(2);
+        if (widget.category != null)
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text("${widget.category!} Menu", style: theme.textTheme.titleLarge),
+          ),
+        ...filtered.map((item) => buildMenuItemCard(item, theme)),
+      ],
+    );
+  }
 
-          return Card(
-            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: ListTile(
-              contentPadding: const EdgeInsets.all(12),
-              leading: Image.network(
-                item.imageUrl,
-                width: 60,
-                height: 60,
+  Widget buildMenuItemCard(MenuItem item, ThemeData theme) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                item.imagePath,
+                width: 80,
+                height: 80,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
-              ),
-              title: Text(item.name),
-              subtitle: Text(
-                "${item.category}\n${item.description}",
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-              isThreeLine: true,
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(quantity > 0 ? "Rs. $totalPrice" : "Rs. ${item.price}"),
-                  const SizedBox(height: 4),
-                  ElevatedButton(
-                    onPressed: () => increaseQuantity(item.id),
-                    child: Text(quantity > 0 ? "Add More ($quantity)" : "Add"),
-                  ),
-                ],
               ),
             ),
-          );
-        })
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(item.name, style: theme.textTheme.titleMedium),
+                      Row(
+                        children: [
+                          const Icon(Icons.favorite, size: 18, color: Colors.red),
+                          const SizedBox(width: 4),
+                          Text("${item.likeCount}", style: theme.textTheme.bodySmall),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(item.description, style: theme.textTheme.bodyMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 4),
+                  Text("Rating: ${item.rating.toStringAsFixed(1)} ★", style: theme.textTheme.bodySmall?.copyWith(color: Colors.orange)),
+                  const SizedBox(height: 4),
+                  Text("Featured: ${item.featuredRestaurants.join(", ")}", style: theme.textTheme.bodySmall?.copyWith(color: Colors.blueGrey)),
+                  const SizedBox(height: 4),
+                  Text("Rs ${item.price.toStringAsFixed(2)}", style: theme.textTheme.bodyLarge?.copyWith(color: AppTheme.accentColor)),
+                  const SizedBox(height: 8),
+                  buildQuantityControls(item, theme),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildQuantityControls(MenuItem item, ThemeData theme) {
+    final qty = quantities[item.id] ?? 0;
+    return Row(
+      children: [
+        if (qty > 0)
+          IconButton(icon: const Icon(Icons.remove_circle_outline), onPressed: () => remove(item.id)),
+        Text("$qty", style: theme.textTheme.titleMedium),
+        const SizedBox(width: 4),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppTheme.primaryColor,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+          onPressed: () => add(item.id),
+          child: Text(
+            qty == 0 ? "Add" : "Add More",
+            style: const TextStyle(color: Colors.white),
+          ),
+        )
       ],
     );
   }

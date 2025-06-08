@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../themes/app_theme.dart';
 import '../home_screen.dart';
-import '../menus_screen.dart';
+import '../menu_screen.dart';
 import '../offers_screen.dart';
 import '../orders_screen.dart';
 import '../profile_screen.dart';
@@ -18,7 +18,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const MenusScreen(),
+    const MenuScreen(),
     const OffersScreen(),
     const OrdersScreen(),
     const ProfileScreen(),

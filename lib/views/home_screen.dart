@@ -216,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               ReviewsSection(menuItems: [
-                menuItems[0], menuItems[4]]), 
+                menuItems[0], menuItems[2]]), 
               const SizedBox(height: 24),
 
             ],

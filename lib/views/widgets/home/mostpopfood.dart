@@ -10,7 +10,7 @@ class MostPopularFoodsSection extends StatelessWidget {
       "rating": 4.5,
       "price": "LKR 2,300",
       "image":
-          "https://media.cntravellerme.com/photos/66cc5cb74871ab67bc593f1b/16:9/w_2560%2Cc_limit/ShoulldersByHarpos3.jpg",
+          "https://images.squarespace-cdn.com/content/v1/624fa63d5ba99559345806e6/7a61d184-c013-41b1-885e-89836d273e42/EG5_EP84_Sri-Lankan-Prawn-Curry.jpg",
     },
     {
       "name": "Egg Hoppers (Appa)",
@@ -42,7 +42,7 @@ class MostPopularFoodsSection extends StatelessWidget {
       "rating": 4.3,
       "price": "LKR 1,400",
       "image":
-          "https://www.hungrylankan.com/wp-content/uploads/2020/07/20200705_125604_compress10.jpg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi1mqee0j3rsa01DNdonytVyHbxVZ3L0qdfg&s",
     },
   ];
 

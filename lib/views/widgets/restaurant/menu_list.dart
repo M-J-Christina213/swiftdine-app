@@ -28,7 +28,7 @@ class _MenuListState extends State<MenuList> {
     MenuItem(id: "6", name: "Cuttlefish Curry", description: "Rich seafood curry with tender cuttlefish.", price: 1550.0, imagePath: "assets/images/cuttlefish.png", category: "Seafood Dishes", featuredRestaurants: ["Sea Harvest"], rating: 4.4, likeCount: 30),
 
     // Chicken Dishes
-    MenuItem(id: "7", name: "Chicken Biryani", description: "Fragrant rice dish with marinated chicken.", price: 1000.0, imagePath: "assets/images/biryani.png", category: "Chicken Dishes", featuredRestaurants: ["Spice Fusion"], rating: 4.2, likeCount: 60),
+    MenuItem(id: "7", name: "Chicken Biryani", description: "Fragrant rice dish with marinated chicken.", price: 1000.0, imagePath: "assets/images/briyani.png", category: "Chicken Dishes", featuredRestaurants: ["Spice Fusion"], rating: 4.2, likeCount: 60),
     MenuItem(id: "8", name: "Crispy Chicken Wings", description: "Spicy battered wings with dip.", price: 900.0, imagePath: "assets/images/wings.png", category: "Chicken Dishes", featuredRestaurants: ["Spice Fusion"], rating: 4.2, likeCount: 34),
     MenuItem(id: "9", name: "Chicken Curry", description: "Rich and spicy traditional curry.", price: 1150.0, imagePath: "assets/images/curry.png", category: "Chicken Dishes", featuredRestaurants: ["Spice Fusion"], rating: 4.5, likeCount: 58),
 

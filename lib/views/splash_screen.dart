@@ -32,18 +32,11 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Image.asset(
               'assets/images/swiftdine.jpg',
-              width: 100,
-              height: 100,
+              width: 500,
+              height: 200,
             ),
-            SizedBox(height: 20),
-            Text(
-              'Swiftdine',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.backgroundColor,
-              ),
-            ),
+            
+            
             SizedBox(height: 10),
             CircularProgressIndicator(
               color: AppTheme.accentColor,

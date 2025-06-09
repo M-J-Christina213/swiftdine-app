@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../controllers/auth_controller.dart';
+import 'package:swiftdine_app/views/home_screen.dart';
 import 'shared/auth_ui.dart'; 
 import '../views/signup_screen.dart';
 
@@ -18,20 +18,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void toggleObscure() => setState(() => obscureText = !obscureText);
 
-  void handleLogin() {
-    final email = emailController.text.trim();
-    final password = passwordController.text.trim();
-
-    final success = AuthController.login(email, password);
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(success ? 'Success' : 'Error'),
-        content: Text(success ? 'Login Successful!' : 'Invalid email or password.'),
-        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK'))],
-      ),
-    );
-  }
+  
+    void handleLogin() {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (_) => const HomeScreen()),
+  );
+}
+  
 
   @override
   Widget build(BuildContext context) {

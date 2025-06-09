@@ -19,7 +19,12 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const MenuScreen(),
-    SpecialOfferScreen(),
+     OfferScreen(
+    isLoggedIn: true,
+    isBirthdayMonth: true,
+    userName: 'Christina',
+    birthdayCountdown: Duration(days: 3, hours: 2, minutes: 45),
+  ),
     const OrderScreen(),
     const ProfileScreen(),
   ];

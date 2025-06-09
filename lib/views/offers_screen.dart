@@ -3,7 +3,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:swiftdine_app/themes/app_theme.dart';
 
+// Your existing OfferScreen class...
 class OfferScreen extends StatefulWidget {
   final bool isLoggedIn;
   final bool isBirthdayMonth;
@@ -27,7 +29,6 @@ class _OfferScreenState extends State<OfferScreen> {
   late DateTime _targetDate;
   Duration _timeLeft = Duration.zero;
 
-  // Sample tourist offers data with local assets
   final List<Map<String, String>> touristOffers = [
     {
       'img': 'assets/images/tour1.png',
@@ -49,6 +50,68 @@ class _OfferScreenState extends State<OfferScreen> {
     },
   ];
 
+  final List<Map<String, dynamic>> seasonOffers = [
+    {
+      'img': 'assets/images/season2.png',
+      'name': 'Christmas Roast Platter – 20% Off',
+      'discount': '20% Off',
+      'validity': '2025-12-01 to 2025-12-31',
+      'outlets': 18,
+      'tag': 'Christmas',
+    },
+    {
+      'img': 'assets/images/season3.png',
+      'name': 'Ramadan Iftar Packages',
+      'discount': 'Special Packages',
+      'validity': '2025-04-01 to 2025-04-30',
+      'outlets': 10,
+      'tag': 'Ramadan',
+    },
+    {
+      'img': 'assets/images/season1.png',
+      'name': 'Awurudu Food Combos – Up to 25% Off',
+      'discount': '25% Off',
+      'validity': '2025-04-10 to 2025-04-25',
+      'outlets': 12,
+      'tag': 'Awurudu',
+    },
+    {
+      'img': 'assets/images/season4.png',
+      'name': 'Independence Day Local Buffet Specials',
+      'discount': '15% Off',
+      'validity': '2025-02-01 to 2025-02-10',
+      'outlets': 14,
+      'tag': 'Independence',
+    },
+  ];
+
+  final List<Map<String, String>> groupDiningOffers = [
+    {
+      'img': 'assets/images/group1.png',
+      'title': 'Bring Friends, Save More',
+      'desc': 'Enjoy bigger savings when you bring your friends.',
+      'offer_price': 'Rs1,200',
+      'old_price': 'Rs1,500',
+      'save': '25%',
+    },
+    {
+      'img': 'assets/images/group2.png',
+      'title': 'Family Bundle – Meal for 4',
+      'desc': 'Enjoy 20% off your total bill for groups of 4 or more.',
+      'offer_price': 'Rs2,500',
+      'old_price': 'Rs3,000',
+      'save': '30%',
+    },
+    {
+      'img': 'assets/images/group3.png',
+      'title': 'Couple’s Night Out',
+      'desc': 'Get a free mocktail and dessert for two.',
+      'offer_price': 'Rs1,800',
+      'old_price': 'Rs2,250',
+      'save': '10%',
+    },
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -58,9 +121,7 @@ class _OfferScreenState extends State<OfferScreen> {
 
   void _startCountdown() {
     _updateTimeLeft();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      _updateTimeLeft();
-    });
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) => _updateTimeLeft());
   }
 
   void _updateTimeLeft() {
@@ -80,45 +141,230 @@ class _OfferScreenState extends State<OfferScreen> {
     super.dispose();
   }
 
+  Widget _buildSeasonalOffers() {
+    return SizedBox(
+      height: 220,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: seasonOffers.length,
+        itemBuilder: (context, index) {
+          final offer = seasonOffers[index];
+          return Container(
+            width: 300,
+            margin: const EdgeInsets.only(left: 16, right: 8),
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(12)),
+                    child: Image.asset(
+                      offer['img'],
+                      height: 120,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(offer['name'],
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Validity: ${offer['validity']}',
+                          style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildGroupDiningCardVertical(Map<String, String> offer) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius:
+                const BorderRadius.vertical(top: Radius.circular(12)),
+            child: Image.asset(
+              offer['img']!,
+              height: 160,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(offer['title']!,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 6),
+                Text(offer['desc']!),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Text(
+                      offer['offer_price']!,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.accentColor,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      offer['old_price']!,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Save ${offer['save']}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.green.shade700,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTouristOffers() {
+    return Column(
+      children: touristOffers.map(_buildOfferCard).toList(),
+    );
+  }
+
+  Widget _buildHeader() {
+    final d = _timeLeft.inDays.toString().padLeft(2, '0');
+    final h = (_timeLeft.inHours % 24).toString().padLeft(2, '0');
+    final m = (_timeLeft.inMinutes % 60).toString().padLeft(2, '0');
+    final s = (_timeLeft.inSeconds % 60).toString().padLeft(2, '0');
+
+    return Stack(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 250,
+          child: Image.asset('assets/images/headb.png', fit: BoxFit.cover),
+        ),
+        Container(
+          width: double.infinity,
+          height: 250,
+          color: Colors.black.withAlpha((0.5 * 255).toInt()),
+        ),
+        Positioned.fill(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: widget.isLoggedIn && widget.isBirthdayMonth
+                        ? [
+                            Text(
+                              '🎂 Happy Birthday, ${widget.userName}!',
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Birthday on ${DateFormat('MMMM dd, yyyy').format(_targetDate)}',
+                              style: const TextStyle(
+                                  color: Colors.white70, fontSize: 16),
+                            ),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _buildTimeBox(d, 'Days'),
+                                _buildTimeBox(h, 'Hours'),
+                                _buildTimeBox(m, 'Min'),
+                                _buildTimeBox(s, 'Sec'),
+                              ],
+                            ),
+                          ]
+                        : [
+                            const Text(
+                              'Welcome to SwiftDine Offers!',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Explore exciting discounts available now!',
+                              style: TextStyle(
+                                  color: Colors.white70, fontSize: 16),
+                            ),
+                          ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
   Widget _buildTimeBox(String value, String label) {
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: Colors.orange,
+            color: AppTheme.primaryColor,
             borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.orange.shade700.withAlpha((0.5 * 255).round()),
-                offset: const Offset(0, 4),
-                blurRadius: 6,
-              ),
-            ],
           ),
           child: Text(
             value,
             style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontFamily: 'RobotoMono',
-            ),
+                fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
         const SizedBox(height: 6),
-        Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white70,
-            fontSize: 14,
-          ),
-        ),
+        Text(label,
+            style: const TextStyle(color: Colors.white70, fontSize: 14)),
       ],
     );
   }
 
-  // Widget for one offer card
   Widget _buildOfferCard(Map<String, String> offer) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -144,25 +390,21 @@ class _OfferScreenState extends State<OfferScreen> {
                 children: [
                   Text(
                     offer['title']!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.orange,
+                      color: AppTheme.primaryColor,
                     ),
                   ),
                   const SizedBox(height: 6),
-                  Text(
-                    offer['desc']!,
-                    style: const TextStyle(fontSize: 14),
-                  ),
+                  Text(offer['desc']!, style: const TextStyle(fontSize: 14)),
                   const SizedBox(height: 6),
                   Text(
                     offer['validity']!,
                     style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                      fontStyle: FontStyle.italic,
-                    ),
+                        fontSize: 12,
+                        color: Colors.grey,
+                        fontStyle: FontStyle.italic),
                   ),
                 ],
               ),
@@ -173,195 +415,36 @@ class _OfferScreenState extends State<OfferScreen> {
     );
   }
 
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Text(
+        title,
+        style: Theme.of(context)
+            .textTheme
+            .titleLarge
+            ?.copyWith(color: AppTheme.primaryColor, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final formattedDate = DateFormat('MMMM dd, yyyy').format(_targetDate);
-
-    final days = _timeLeft.inDays.toString().padLeft(2, '0');
-    final hours = _timeLeft.inHours.remainder(24).toString().padLeft(2, '0');
-    final minutes = _timeLeft.inMinutes.remainder(60).toString().padLeft(2, '0');
-    final seconds = _timeLeft.inSeconds.remainder(60).toString().padLeft(2, '0');
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Special Offers'),
-        backgroundColor: Colors.orange,
-        automaticallyImplyLeading: false,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Header with background image + birthday message or sign-up prompt
-            Stack(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 250,
-                  child: Image.asset(
-                    'assets/images/headb.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 250,
-                  color: Colors.black.withAlpha((0.5 * 255).round()),
-                ),
-                Positioned.fill(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              if (widget.isLoggedIn && widget.isBirthdayMonth) ...[
-                                Text(
-                                  '🎂 Happy Birthday, ${widget.userName}!',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Birthday on $formattedDate',
-                                  style: const TextStyle(color: Colors.white70),
-                                ),
-                                const SizedBox(height: 12),
-
-                                // Countdown Row
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    _buildTimeBox(days, 'Days'),
-                                    const SizedBox(width: 12),
-                                    _buildTimeBox(hours, 'Hours'),
-                                    const SizedBox(width: 12),
-                                    _buildTimeBox(minutes, 'Minutes'),
-                                    const SizedBox(width: 12),
-                                    _buildTimeBox(seconds, 'Seconds'),
-                                  ],
-                                ),
-
-                                const SizedBox(height: 20),
-
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        title: Row(
-                                          children: const [
-                                            Icon(Icons.cake,
-                                                color: Colors.orange),
-                                            SizedBox(width: 10),
-                                            Text("Birthday Offer 🎉")
-                                          ],
-                                        ),
-                                        content: const Text(
-                                          "You've successfully claimed your birthday treat! Enjoy exclusive discounts on your next order. 🎂",
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context),
-                                            child: const Text('OK'),
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  icon: const Icon(Icons.card_giftcard,
-                                      color: Colors.white),
-                                  label: const Text(
-                                    'Claim Birthday Offer 🎉',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 24, vertical: 12),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30)),
-                                  ),
-                                ),
-                              ] else ...[
-                                const Text(
-                                  'Special Offers Await You!',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                const Text(
-                                  'Sign up and complete your profile to unlock exclusive discounts.',
-                                  style: TextStyle(color: Colors.white70),
-                                ),
-                              ],
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image.asset(
-                              'assets/images/headf.png',
-                              width: 180,
-                              height: 210,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-
-            // Tourist Offers list title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Tourist Offers',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Colors.orange,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 8),
-
-            // List of offers
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: touristOffers.length,
-              itemBuilder: (context, index) {
-                return _buildOfferCard(touristOffers[index]);
-              },
-            ),
-
-            const SizedBox(height: 20),
-          ],
-        ),
+      body: ListView(
+        children: [
+          _buildHeader(),
+          const SizedBox(height: 16),
+          _buildSectionTitle("🎉 Seasonal Offers"),
+          _buildSeasonalOffers(),
+          const SizedBox(height: 20),
+          _buildSectionTitle("👨‍👩‍👧 Group Dining Offers"),
+          ...groupDiningOffers.map(_buildGroupDiningCardVertical),
+          const SizedBox(height: 20),
+          _buildSectionTitle("🌍 Tourist Offers"),
+          _buildTouristOffers(),
+          const SizedBox(height: 30),
+        ],
       ),
     );
   }

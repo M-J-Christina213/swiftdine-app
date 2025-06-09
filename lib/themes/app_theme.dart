@@ -58,4 +58,6 @@ class AppTheme {
     fontSize: 16,
     fontWeight: FontWeight.bold,
   );
+
+  static const Color scaffoldBackgroundColor = Color(0xFFF5F5F5);
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swiftdine_app/views/restaurant_detail_screen.dart';
+import 'package:swiftdine_app/views/widgets/restaurant/restaurant_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -89,10 +89,11 @@ Widget build(BuildContext context) {
 
   return GestureDetector(
     onTap: () {
-      Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const RestaurantDetailScreen()),
-    );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const RestaurantDetailScreen()),
+        );
+
   },
     child: Container(
       width: compact ? 160 : 240,

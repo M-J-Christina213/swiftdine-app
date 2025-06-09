@@ -1,11 +1,35 @@
 import 'package:flutter/material.dart';
-
+import 'package:swiftdine_app/views/menu_screen.dart';
 class RestaurantDetailScreen extends StatelessWidget {
+  
   const RestaurantDetailScreen({super.key});
+
+  
 
   @override
   Widget build(BuildContext context) {
+
+    final galleryImages = [
+      'assets/images/gallery1.png',
+      'assets/images/gallery2.png',
+      'assets/images/gallery3.png',
+      'assets/images/gallery4.png',
+      'assets/images/gallery5.png',
+      'assets/images/gallery6.png',
+    ];
+
     return Scaffold(
+      appBar: AppBar(
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.pop(context); 
+        },
+      ),
+      title: Text("Restaurant Details"),
+      backgroundColor: const Color.fromARGB(255, 255, 119, 0),
+    ),
+      
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -14,7 +38,7 @@ class RestaurantDetailScreen extends StatelessWidget {
             Stack(
               children: [
                 Image.asset(
-                  'assets/restaurant_banner.jpg',
+                  'assets/images/mtlavinia.webp',
                   width: double.infinity,
                   height: 200,
                   fit: BoxFit.cover,
@@ -41,10 +65,15 @@ class RestaurantDetailScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
+                  backgroundColor: const Color.fromARGB(255, 255, 132, 0),
                   shape: StadiumBorder(),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MenuScreen()),
+                  );
+                },
                 child: Text("View Menu"),
               ),
             ),
@@ -60,7 +89,7 @@ class RestaurantDetailScreen extends StatelessWidget {
                     title: "Mount Lavinia",
                     subtitle: "123 Beach Road, Mount Lavinia",
                   ),
-                  Image.asset('assets/map_preview.png'),
+                  Image.asset('assets/images/map2.png'),
                   InfoCard(
                     icon: Icons.access_time,
                     title: "Today: Opens at 8PM",
@@ -166,18 +195,36 @@ class RestaurantDetailScreen extends StatelessWidget {
             // Delivery and Takeaway
             DeliveryTakeawayCard(),
 
-            // Gallery Section
+            
+
+            //  Gallery Section
             Padding(
               padding: const EdgeInsets.all(16),
-              child: GridView.count(
-                crossAxisCount: 3,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: List.generate(6, (index) {
-                  return Image.asset('assets/gallery_$index.jpg', fit: BoxFit.cover);
-                }),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.photo, color: Colors.orange),
+                      SizedBox(width: 8),
+                      Text("Gallery",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  GridView.count(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    children: galleryImages
+                        .map((imgPath) =>
+                            Image.asset(imgPath, fit: BoxFit.cover))
+                        .toList(),
+                  ),
+                ],
               ),
             ),
 
@@ -312,21 +359,25 @@ class RestaurantRatingReview extends StatelessWidget {
           ),
           SizedBox(height: 16),
           ReviewCard(
-              name: "Nuwan Perera",
-              date: "April 15, 2025",
-              comment:
-                  "Delicious food and friendly staff! Highly recommended for a casual dinner.",
-              image: 'assets/review1.jpg'),
+            name: "Nuwan Perera",
+            date: "April 15, 2025",
+            comment: "Delicious food and friendly staff! Highly recommended for a casual dinner.",
+            image: 'assets/images/kaju.jpeg',
+            avatarImage: 'assets/images/r4.png',
+          ),
           ReviewCard(
-              name: "Hashini Silva",
-              date: "March 22, 2025",
-              comment:
-                  "Loved the ambiance. Perfect for date nights. Would visit again!"),
+            name: "Hashini Silva",
+            date: "March 22, 2025",
+            comment: "Loved the ambiance. Perfect for date nights. Would visit again!",
+            avatarImage: 'assets/images/r5.png',
+          ),
           ReviewCard(
-              name: "Sahan Dissanayake",
-              date: "February 10, 2025",
-              comment:
-                  "Food was okay, but delivery took longer than expected."),
+            name: "Sahan Dissanayake",
+            date: "February 10, 2025",
+            comment: "Food was okay, but delivery took longer than expected.",
+            avatarImage: 'assets/images/r6.png',
+          ),
+
         ],
       ),
     );
@@ -370,12 +421,16 @@ class ReviewCard extends StatelessWidget {
   final String date;
   final String comment;
   final String? image;
+  final String avatarImage;
 
-  const ReviewCard(
-      {super.key, required this.name,
-      required this.date,
-      required this.comment,
-      this.image});
+  const ReviewCard({
+    super.key,
+    required this.name,
+    required this.date,
+    required this.comment,
+    this.image,
+    required this.avatarImage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -389,7 +444,7 @@ class ReviewCard extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: AssetImage('assets/user_avatar.png'),
+                  backgroundImage: AssetImage(avatarImage),
                 ),
                 SizedBox(width: 8),
                 Column(
